@@ -17,7 +17,11 @@ extern char HOME[size]; // home directory
 extern int pid;
 /* pid_t pid; */
 extern char cwd[size]; // current working directory
-extern char prev_wd[size]; // previous working directory
+extern char prevDir[size]; // previous working directory
 
+void prompt();
+void parseInput(char *inputLine);
+void changeDirectory(char *inputLine);
+void echo(char *inputLine);
 
 #endif

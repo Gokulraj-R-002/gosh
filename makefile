@@ -1,7 +1,7 @@
 CC=gcc
 CFLAGS=-I.
 DEPS = header.h prompt.h
-OBJ = main.c prompt.c
+OBJ = main.c prompt.c parse_input.c basic_commands.c
 
 %.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)

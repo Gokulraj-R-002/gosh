@@ -1,5 +1,4 @@
 #include "headers.h"
-#include "prompt.h"
 
 void prompt() {
     char cwd[PATH_MAX];
