@@ -29,7 +29,7 @@ struct tokensInInput {
 extern char USER[size]; // username
 extern char HOST[size]; // hostname
 extern char HOME[size]; // home directory 
-extern int pid;
+/* extern int pid; */
 /* pid_t pid; */
 extern char cwd[size]; // current working directory
 extern char prevDir[size]; // previous working directory

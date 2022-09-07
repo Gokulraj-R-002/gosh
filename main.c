@@ -3,7 +3,7 @@
 char USER[size]; // username
 char HOST[size]; // hostname
 char HOME[size]; // home directory 
-int pid;
+/* int pid; */
 char cwd[size]; // current working directory
 char prevDir[size]; // previous directory
 
@@ -15,7 +15,7 @@ void setup() {
     strcpy(cwd, HOME);
     strcpy(prevDir, cwd);
 
-    pid = getpid();
+    /* pid = getpid(); */
 }
 
 void shell() {
