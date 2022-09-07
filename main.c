@@ -26,16 +26,20 @@ void shell() {
     int cmdLength = getline(&inputLine, &n, stdin);
     inputLine[cmdLength - 1] = '\0';
 
+    updateHistory(inputLine);
+
     parseInput(inputLine);
 
 }
 
 int main() {
     setup();
+    initializeHistory();
     while (1) {
         prompt();
         shell();
     }
+    close(fdHistory);
 
     return 0;
 }
