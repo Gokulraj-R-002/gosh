@@ -108,4 +108,26 @@ void printHistory() {
         }
         n = read(fdHistory, &c, 1);
     }
+    /* char *historyFileContents = (char *) malloc (20 * MAX_INPUT * sizeof(char)); */
+    /* assert(historyFileContents != NULL); */
+
+    /* lseek(fdHistory, 0, SEEK_SET); */
+    /* int n = read(fdHistory, historyFileContents, 20 * MAX_INPUT); */
+    /* if (n == -1) { */
+    /*     perror("read"); */
+    /* } */
+    /* else { */
+    /*     historyFileContents[n] = '\0'; */
+    /* } */
+
+    /* if (historySize > 0) { */
+    /*     struct tokensInInput *tokenizedHistoryFile = tokenizeInput(historyFileContents, "\n"); */
+    /*     int start = historySize - 10; */
+    /*     if (start < 0) { */
+    /*         start = 0; */
+    /*     } */
+    /*     for (int i = start; i < historySize; i++) { */
+    /*         printf("%s\n", tokenizedHistoryFile->tokens[i]); */
+    /*     } */
+    /* } */
 }

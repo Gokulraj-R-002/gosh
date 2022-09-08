@@ -1,10 +1,10 @@
 #include "headers.h"
 
 int *bgPids;
+
 struct bgProcesses {
     int pid;
     char name[100];
-    int status;
 };
 
 void execute(struct tokensInInput *tokenizedInput) {
@@ -40,9 +40,5 @@ void execute(struct tokensInInput *tokenizedInput) {
             wait(NULL);
         }
     }
-
-    // handle background processes
-    // for a background process, print the number of the background process and the pid of the process
-
 
 }

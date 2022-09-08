@@ -26,9 +26,7 @@ struct tokensInInput *tokenizeInput(char *inputLine, char *delim) {
     return tokenizedInput;
 }
 
-void parseInput(char *inputLine) {
-    convertTabsIntoSpaces(inputLine);
-    struct tokensInInput *tokenizedInput = tokenizeInput(inputLine, " ");
+void searchCommand(struct tokensInInput *tokenizedInput) {
     char *cmd = tokenizedInput->tokens[0];
 
     if (strcmp(cmd, "exit") == 0) {
@@ -58,4 +56,26 @@ void parseInput(char *inputLine) {
     else {
         execute(tokenizedInput);
     }
+}
+
+void parseInput(char *inputLine) {
+    convertTabsIntoSpaces(inputLine);
+
+    int isBgProcess = 0;
+    int noOfCommands = 0;
+
+    /* struct tokensInInput *tokenizedWrtSemiCol = tokenizeInput(inputLine, ";"); */
+    /* for (int i = 0; i < tokenizedWrtSemiCol->noOfTokens; i++) { */
+    /*     char *token1 = tokenizedWrtSemiCol->tokens[i]; */
+    /*     struct tokensInInput *tokenizedWrtAmpersand = tokenizeInput(token1, "&"); */
+    /*     noOfCommands += tokenizedWrtAmpersand->noOfTokens; */
+    /*     /1* for (int j = 0; j < tokenizedWrtAmpersand->noOfTokens; j++) { *1/ */
+    /*     /1*     printf("%s\n", tokenizedWrtAmpersand->tokens[j]); *1/ */
+    /*     /1* } *1/ */
+    /* } */
+    /* printf("noOfCommands: %d\n", noOfCommands); */
+
+    struct tokensInInput *tokenizedInput = tokenizeInput(inputLine, " ");
+    /* char *cmd = tokenizedInput->tokens[0]; */
+    searchCommand(tokenizedInput);
 }
