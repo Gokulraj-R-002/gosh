@@ -1,5 +1,13 @@
 #include "headers.h"
 
+void convertTabsIntoSpaces(char *inputLine) {
+    for (int i = 0; i < strlen(inputLine); i++) {
+        if (inputLine[i] == '\t') {
+            inputLine[i] = ' ';
+        }
+    }
+}
+
 struct tokensInInput *tokenizeInput(char *inputLine) {
     struct tokensInInput *tokenizedInput = (struct tokensInInput *)malloc(sizeof(struct tokensInInput));
     assert(tokenizedInput != NULL);
@@ -19,6 +27,7 @@ struct tokensInInput *tokenizeInput(char *inputLine) {
 }
 
 void parseInput(char *inputLine) {
+    convertTabsIntoSpaces(inputLine);
     struct tokensInInput *tokenizedInput = tokenizeInput(inputLine);
     char *cmd = tokenizedInput->tokens[0];
 
