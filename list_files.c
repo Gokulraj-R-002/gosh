@@ -1,11 +1,5 @@
 #include "headers.h"
 
-struct fileInfo {
-    char *fileName;
-    int isHidden;
-    char *filePath;
-};
-
 char *getPermissions(struct stat fileStat) {
     char *permissions = (char *)malloc(11 * sizeof(char));
     assert(permissions != NULL);

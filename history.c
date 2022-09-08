@@ -40,42 +40,26 @@ void reverseString(char *str) {
 }
 
 void updateHistory(char *inputLine) {
-    /* char *lastLine = (char *) malloc (MAX_INPUT * sizeof(char)); */
-    /* assert(lastLine != NULL); */
-    /* char ch; */
-    /* lseek(fdHistory, -2, SEEK_END); // seek to the second last character */
-    /* int n = read(fdHistory, &ch, 1); */
-    /* /1* strcpy(lastLine, ch); *1/ */
-    /* lastLine[0] = ch; */
-    /* lastLine[1] = '\0'; */
-    /* while(n > 0 && ch != '\n') { */
-    /*     lseek(fdHistory, -2, SEEK_CUR); */
-    /*     n = read(fdHistory, &ch, 1); */
-    /*     if (ch != '\n') { */
-    /*         strcat(lastLine, &ch); */
-    /*     } */
-    /* } */
-    /* reverseString(lastLine); */
-    /* /1* lastLine[strlen(lastLine) - 1] = '\0'; *1/ */
-    /* printf("lastLine: %s\n", lastLine); */
-    /* if(strcmp(lastLine, inputLine) == 0) { */
-    /*     printf("same as last line\n"); */
-    /*     return; */
-    /* } */
+    char *historyFileContents = (char *) malloc (20 * MAX_INPUT * sizeof(char));
+    assert(historyFileContents != NULL);
 
-    /* char *historyFileContents = (char *) malloc (20 * MAX_INPUT * sizeof(char)); */
-    /* assert(historyFileContents != NULL); */
-    /* lseek(fdHistory, 0, SEEK_SET); */
-    /* int n = read(fdHistory, historyFileContents, 20 * MAX_INPUT); */
-    /* if (n == -1) { */
-    /*     perror("read"); */
-    /* } */
-    /* else { */
-    /*     historyFileContents[n] = '\0'; */
-    /* } */
+    lseek(fdHistory, 0, SEEK_SET);
+    int n = read(fdHistory, historyFileContents, 20 * MAX_INPUT);
+    if (n == -1) {
+        perror("read");
+    }
+    else {
+        historyFileContents[n] = '\0';
+    }
 
-    /* struct tokensInInput *tokenizedHistoryFile = tokenizeInput(historyFileContents); */
-    /* char *lastLine = tokenizedHistoryFile->tokens[historySize - 1]; */
+    if (historySize > 0) {
+        struct tokensInInput *tokenizedHistoryFile = tokenizeInput(historyFileContents, "\n");
+        char *lastLine = tokenizedHistoryFile->tokens[historySize - 1];
+        // if inputLine is same as the last line in the history file, don't update the history file
+        if (strcmp(lastLine, inputLine) == 0) {
+            return;
+        }
+    }
 
     if (historySize >= 20) {
         lseek(fdHistory, 0, SEEK_SET);

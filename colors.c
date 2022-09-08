@@ -28,7 +28,7 @@ void setColors(char *path) {
     }
     else if (S_ISREG(fileStat.st_mode)) {
         /* printf("\033[0m"); */
-        printf(white);
+        printf(colorReset);
     }
 }
 

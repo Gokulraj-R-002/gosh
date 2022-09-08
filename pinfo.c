@@ -29,7 +29,7 @@ void pinfo(struct tokensInInput *tokenizedInput) {
         return;
     }
 
-    struct tokensInInput *tokenizedBuffer = tokenizeInput(buffer);
+    struct tokensInInput *tokenizedBuffer = tokenizeInput(buffer, " ");
 
     char *processStatus = tokenizedBuffer->tokens[2];
     char *processVirtualMemory = tokenizedBuffer->tokens[22];

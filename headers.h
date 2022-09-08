@@ -37,6 +37,12 @@ struct tokensInInput {
     char **tokens;
 };
 
+struct fileInfo {
+    char *fileName;
+    int isHidden;
+    char *filePath;
+};
+
 
 extern char USER[size]; // username
 extern char HOST[size]; // hostname
@@ -47,7 +53,7 @@ extern int fdHistory; // file descriptor for history file
 
 void prompt();
 void parseInput(char *inputLine);
-struct tokensInInput *tokenizeInput(char *inputLine);
+struct tokensInInput *tokenizeInput(char *inputLine, char *delim);
 void changeDirectory(struct tokensInInput *tokenizedInput);
 void echo(struct tokensInInput *tokenizedInput);
 void listFiles(struct tokensInInput *tokenizedInput);

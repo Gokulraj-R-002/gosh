@@ -8,7 +8,7 @@ void convertTabsIntoSpaces(char *inputLine) {
     }
 }
 
-struct tokensInInput *tokenizeInput(char *inputLine) {
+struct tokensInInput *tokenizeInput(char *inputLine, char *delim) {
     struct tokensInInput *tokenizedInput = (struct tokensInInput *)malloc(sizeof(struct tokensInInput));
     assert(tokenizedInput != NULL);
 
@@ -17,18 +17,18 @@ struct tokensInInput *tokenizeInput(char *inputLine) {
     tokenizedInput->tokens = (char **)malloc(MAX_INPUT * sizeof(char *));
     assert(tokenizedInput->tokens != NULL);
 
-    char *token = strtok(inputLine, " ");
+    char *token = strtok(inputLine, delim);
     while (token != NULL) {
         tokenizedInput->tokens[tokenizedInput->noOfTokens] = token;
         tokenizedInput->noOfTokens++;
-        token = strtok(NULL, " ");
+        token = strtok(NULL, delim);
     }
     return tokenizedInput;
 }
 
 void parseInput(char *inputLine) {
     convertTabsIntoSpaces(inputLine);
-    struct tokensInInput *tokenizedInput = tokenizeInput(inputLine);
+    struct tokensInInput *tokenizedInput = tokenizeInput(inputLine, " ");
     char *cmd = tokenizedInput->tokens[0];
 
     if (strcmp(cmd, "exit") == 0) {
