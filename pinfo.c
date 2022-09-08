@@ -34,8 +34,6 @@ void pinfo(struct tokensInInput *tokenizedInput) {
     char *processStatus = tokenizedBuffer->tokens[2];
     char *processVirtualMemory = tokenizedBuffer->tokens[22];
     
-    // not sure if the next line works properly
-    /* int isFg = (strcmp(tokenizedBuffer->tokens[39], "0") == 0) ? 1 : 0; // 1 if fg, 0 if bg */
     int isFg = (strcmp(tokenizedBuffer->tokens[7], tokenizedBuffer->tokens[0]) == 0) ? 1 : 0; // 1 if fg, 0 if bg
 
     sprintf(fileToRead, "/proc/%d/exe", pid);
@@ -55,5 +53,6 @@ void pinfo(struct tokensInInput *tokenizedInput) {
 
     free(fileToRead);
     free(buffer);
+    free(tokenizedBuffer);
     free(executablePath);
 }

@@ -19,14 +19,12 @@ struct tokensInInput *tokenizeInput(char *inputLine) {
 }
 
 void parseInput(char *inputLine) {
-    /* char *cmd = (char *) malloc (MAX_INPUT * sizeof(char)); */
-    /* cmd = strtok(inputLine, " "); */
     struct tokensInInput *tokenizedInput = tokenizeInput(inputLine);
     char *cmd = tokenizedInput->tokens[0];
 
-    /* if (strcmp(cmd, "exit") == 0) { */
-    /*     exit(0); */
-    /* } */
+    if (strcmp(cmd, "exit") == 0) {
+        exit(0);
+    }
     if (strcmp(cmd, "cd") == 0) {
         changeDirectory(tokenizedInput);
     }
@@ -48,12 +46,6 @@ void parseInput(char *inputLine) {
     else if (strcmp(cmd, "discover") == 0) {
         discover(tokenizedInput);
     }
-    /* else if (strcmp(cmd, "quit") == 0) { */
-    /*     quit(); */
-    /* } */
-    /* else { */
-    /*     execute(tokenizedInput); */
-    /* } */
     else {
         execute(tokenizedInput);
     }

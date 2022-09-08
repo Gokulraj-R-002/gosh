@@ -4,8 +4,6 @@ void prompt() {
     char cwd[PATH_MAX];
     getcwd(cwd, PATH_MAX);
 
-    /* printf("<%s@%s:%s> ", USER, HOST, cwd); */
-
     char pathToPrint[PATH_MAX];
     strcpy(pathToPrint, cwd);
     if (strncmp(cwd, HOME, strlen(HOME)) == 0) {

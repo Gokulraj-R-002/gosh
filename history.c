@@ -15,7 +15,6 @@ void initializeHistory() {
         perror("open");
     }
 
-    // count the number of lines in the history file using system calls like read, write, lseek
     char c;
     int n = read(fdHistory, &c, 1);
     while (n > 0) {
@@ -24,8 +23,6 @@ void initializeHistory() {
         }
         n = read(fdHistory, &c, 1);
     }
-
-    /* printf("historySize: %d\n", historySize); */
 
     free(historyFile);
 }
@@ -43,25 +40,6 @@ void reverseString(char *str) {
 }
 
 void updateHistory(char *inputLine) {
-    /* lseek(fdHistory, 0, SEEK_END); */
-
-    /* int bytesWritten = write(fdHistory, inputLine, strlen(inputLine)); */
-    /* if (bytesWritten == -1) { */
-    /*     perror("write"); */
-    /* } */
-    /* else if (bytesWritten > 0) { */
-    /*     write(fdHistory, "\n", 1); */
-    /* } */
-
-    // write the inputLine to the history file using system calls like read, write, lseek
-    // if the history file has 20 or more lines, delete the oldest line and add the new line to the end of the file
-    // if the history file has less than 20 lines, add the new line to the end of the file and increment the historySize
-    // if the inputLine is same as the last line in the history file, do not add it to the history file
-    // if the inputLine is empty, do not add it to the history file
-    
-
-    // check if the last line in the history file is same as the inputLine
-    
     /* char *lastLine = (char *) malloc (MAX_INPUT * sizeof(char)); */
     /* assert(lastLine != NULL); */
     /* char ch; */
