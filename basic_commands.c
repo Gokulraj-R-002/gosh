@@ -12,8 +12,17 @@ void changeDirectory(struct tokensInInput *tokenizedInput) {
         chdir(HOME);
         strcpy(prevDir, cwd);
         strcpy(cwd, HOME);
+        return;
     }
-    else if (strcmp(dir, "-") == 0) {
+    if (dir[0] == '~') {
+        char *newDir = (char *)malloc(MAX_INPUT * sizeof(char));
+        assert(newDir != NULL);
+        strcpy(newDir, HOME);
+        strcat(newDir, dir + 1);
+        dir = newDir;
+    }
+
+    if (strcmp(dir, "-") == 0) {
         printf("%s\n", prevDir);
         chdir(prevDir);
         strcpy(prevDir, cwd);
