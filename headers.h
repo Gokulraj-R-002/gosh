@@ -51,22 +51,40 @@ extern char cwd[size]; // current working directory
 extern char prevDir[size]; // previous working directory
 extern int fdHistory; // file descriptor for history file
 
-void prompt();
-void parseInput(char *inputLine);
-struct tokensInInput *tokenizeInput(char *inputLine, char *delim);
+// function declarations
+
+// functions in basic_commands.c
 void changeDirectory(struct tokensInInput *tokenizedInput);
 void echo(struct tokensInInput *tokenizedInput);
+
+// function in prompt.c
+void prompt();
+
+// function in parse_input.c
+void parseInput(char *inputLine);
+struct tokensInInput *tokenizeInput(char *inputLine, char *delim);
+
+// functions in list_files.c
 void listFiles(struct tokensInInput *tokenizedInput);
+
+// functions in history.c
 void initializeHistory();
 void updateHistory(char *inputLine);
 void printHistory();
 
+// functions in pinfo.c
 void pinfo(struct tokensInInput *tokenizedInput);
+
+// functions in discover.c
 void discover(struct tokensInInput *tokenizedInput);
 
+// functions in execute.c
 void execute(struct tokensInInput *tokenizedInput);
+void bgProcessExit();
 
+// functions in colors.c
 void setColors(char *path);
 void resetColors();
+
 
 #endif

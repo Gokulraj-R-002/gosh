@@ -32,6 +32,7 @@ void shell() {
 int main() {
     setup();
     initializeHistory();
+    signal(SIGCHLD, bgProcessExit);
     while (1) {
         prompt();
         shell();

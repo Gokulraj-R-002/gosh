@@ -1,44 +1,63 @@
 #include "headers.h"
 
-int *bgPids;
-
-struct bgProcesses {
-    int pid;
-    char name[100];
-};
+char *bgProcessName;
 
 void execute(struct tokensInInput *tokenizedInput) {
-    bgPids = (int *)malloc(MAX_INPUT * sizeof(int));
-    assert(bgPids != NULL);
-    int bgPidsIndex = 0;
+
+    if (tokenizedInput->noOfTokens == 0) {
+        return;
+    }
 
     if (tokenizedInput->tokens[tokenizedInput->noOfTokens - 1][0] == '&') {
+        // bg process
         tokenizedInput->tokens[tokenizedInput->noOfTokens - 1] = NULL;
         tokenizedInput->noOfTokens--;
+
         pid_t pid = fork();
         if (pid == 0) {
-            bgPids[bgPidsIndex] = getpid();
-            bgPidsIndex++;
+            // child
             if (execvp(tokenizedInput->tokens[0], tokenizedInput->tokens) < 0) {
-                printf("Error: Command not found\n");
+                perror("execvp");
                 exit(0);
             }
         }
         else {
-            // do nothing
+            // parent
+            bgProcessName = tokenizedInput->tokens[0];
+            printf("[1] %d\n", pid);
         }
+
     }
     else {
+        // fg process
+        int status;
         pid_t pid = fork();
         if (pid == 0) {
-            // child process
+            // child
             if (execvp(tokenizedInput->tokens[0], tokenizedInput->tokens) < 0) {
-                printf("Error: Command not found\n");
+                perror("execvp");
+                exit(0);
             }
         }
         else {
-            wait(NULL);
+            // parent
+            waitpid(pid, &status, WUNTRACED);
         }
     }
+}
 
+void bgProcessExit() {
+    int wstat;
+    pid_t pid;
+
+    while(1) {
+        pid = wait3 (&wstat, WNOHANG, (struct rusage *)NULL );
+        if (pid == 0)
+            return;
+        else if (pid == -1)
+            return;
+        else {
+            printf("\n%s with pid = %d exited normally\n", bgProcessName, pid);
+        }
+    }
 }
