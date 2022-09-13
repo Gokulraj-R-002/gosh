@@ -5,7 +5,7 @@ This is a simple shell program written in C that replicates most of the function
 
 ## Instructions
 * To run, compile using `make` and run `./gosh`.
-* The shell starts with the current directory from which `./gosh` is run, as the HOME directory.
+* The shell starts with the current directory (from which `./gosh` is run) as the HOME directory.
 
 ## Explanation of the Code
 
@@ -38,8 +38,13 @@ Contains the following functions:
 * `echo()`: implements echo command by just printing out all the tokens in the input, except the first token (which will be the string "echo").
 
 ### [list_files.c](list_files.c)
+* Contains the function `listFiles()` and its helper functions to implement the `ls` command with `-l` and `-a` flags.
+* The fields in the output of `ls -l` like the permissions, no. of hardlinks, file size, etc, are obtained using the `lstat()` function.
 
 ### [system_commands.c](system_commands.c)
+Contains the following functions:
+* `execute()`: Executes system commands that are not implemented here using the `execvp()` function, in either background or foreground depending on the user input.
+* `bgProcessExit()`: This is called when `SIGCHLD` is signalled (when a child is terminated). This function handles printing the name and the pid of the terminated background process.
 
 ### [pinfo.c](pinfo.c)
 * Contains a function `pinfo()` that prints out process info like pid, status, memory and executable path, by reading the files `/proc/<pid>/stat` and `/proc/<pid>/exe`.
@@ -52,5 +57,5 @@ Contains the following functions:
 ### [history.c](history.c)
 Contains the following main functions:
 * `initializeHistory()`: initializes history by setting up the history file (`~/.gosh_history`) 
-* `updateHistory()`:
-* `printHistory()`:
+* `updateHistory()`: adds the input line to the end of the history file. If the file has more than 20 lines, it removes the first line (oldest history).
+* `printHistory()`: prints the last 10 lines of the history file.
