@@ -1,5 +1,8 @@
 #include "headers.h"
 
+int isIORedirection = 0;
+int ioRedirPos = 0;
+
 void convertTabsIntoSpaces(char *inputLine) {
     for (int i = 0; i < strlen(inputLine); i++) {
         if (inputLine[i] == '\t') {
@@ -75,7 +78,24 @@ void parseInput(char *inputLine) {
     /* } */
     /* printf("noOfCommands: %d\n", noOfCommands); */
 
+    /* for (int i = 0; i < strlen(inputLine); i++) { */
+    /*     if (inputLine[i] == '>' || inputLine[i] == '<') { */
+    /*         ioRedirection(inputLine, inputLine[i], i); */
+    /*         return; */
+    /*     } */
+    /* } */
+
     struct tokensInInput *tokenizedInput = tokenizeInput(inputLine, " ");
     /* char *cmd = tokenizedInput->tokens[0]; */
+
+    for (int i = 0; i < tokenizedInput->noOfTokens; i++) {
+        if (strcmp(tokenizedInput->tokens[i], ">") == 0 || strcmp(tokenizedInput->tokens[i], "<") == 0 || strcmp(tokenizedInput->tokens[i], ">>") == 0) {
+            isIORedirection = 1;
+            ioRedirPos = i;
+            execute(tokenizedInput);
+            return;
+        }
+    }
+
     searchCommand(tokenizedInput);
 }

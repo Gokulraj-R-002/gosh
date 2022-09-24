@@ -2,6 +2,8 @@
 
 char *bgProcessName;
 
+int fgPid;
+
 void execute(struct tokensInInput *tokenizedInput) {
 
     if (tokenizedInput->noOfTokens == 0) {
@@ -34,6 +36,9 @@ void execute(struct tokensInInput *tokenizedInput) {
         pid_t pid = fork();
         if (pid == 0) {
             // child
+            if (isIORedirection) {
+                ioRedirection(tokenizedInput, ioRedirPos);
+            }
             if (execvp(tokenizedInput->tokens[0], tokenizedInput->tokens) < 0) {
                 perror("execvp");
                 exit(0);
@@ -41,7 +46,9 @@ void execute(struct tokensInInput *tokenizedInput) {
         }
         else {
             // parent
+            fgPid = pid;
             waitpid(pid, &status, WUNTRACED);
+            fgPid = 0;
         }
     }
 }

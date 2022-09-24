@@ -20,19 +20,31 @@ void shell() {
     assert(inputLine != NULL);
 
     size_t n = MAX_INPUT;
-    int cmdLength = getline(&inputLine, &n, stdin);
-    inputLine[cmdLength - 1] = '\0';
+    /* int cmdLength = getline(&inputLine, &n, stdin); */
+    /* inputLine[cmdLength - 1] = '\0'; */
 
+    if (fgets(inputLine, MAX_INPUT, stdin) == NULL) {
+        printf("The cntrl D command was executed\n");
+        exit(1);        
+    }
     updateHistory(inputLine);
+    /* inputLine[cmdLength - 1] = '\0'; */
+    int len = strlen(inputLine);
+    inputLine[len-1] = '\0';
+
 
     parseInput(inputLine);
-
 }
 
 int main() {
     setup();
     initializeHistory();
+
     signal(SIGCHLD, bgProcessExit);
+    signal(SIGINT, ctrlC_handler);
+    signal(SIGTSTP, ctrlZ_handler);
+    /* signal(SIGQUIT, ctrlD_handler); */
+
     while (1) {
         prompt();
         shell();

@@ -51,6 +51,10 @@ extern char cwd[size]; // current working directory
 extern char prevDir[size]; // previous working directory
 extern int fdHistory; // file descriptor for history file
 
+extern int fgPid; // pid of foreground process
+extern int isIORedirection;
+extern int ioRedirPos;
+
 // function declarations
 
 // functions in basic_commands.c
@@ -85,6 +89,12 @@ void bgProcessExit();
 // functions in colors.c
 void setColors(char *path);
 void resetColors();
+
+
+void ioRedirection(struct tokensInInput *tokenizedInput, int posInInput);
+void ctrlC_handler();
+void ctrlZ_handler();
+void ctrlD_handler();
 
 
 #endif
