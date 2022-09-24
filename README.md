@@ -7,55 +7,18 @@ This is a simple shell program written in C that replicates most of the function
 * To run, compile using `make` and run `./gosh`.
 * The shell starts with the current directory (from which `./gosh` is run) as the HOME directory.
 
-## Explanation of the Code
+## Extension of Assignment-2
 
-The code has been divided into the following files:
+### Signal Handling
+* `Ctrl-c` kills the current foreground process using the SIGINT signal.
+* `Ctrl-z` send the current foreground process to background using the SIGTSTP signal.
+* `Ctrl-d` logs out of the shell and goes back to the shell from where `./gosh` is run. Tried implementing using SIGQUIT signal but not working properly.
 
-### [headers.h](headers.h)
-* Contains `#include` line for all the required header files, so I can just `#include "headers.h"` in all the files.
-* Contains function definitions of all the functions implemented.
-* Contains definitions of structures used in the code.
-* Contains `#define` values.
-* Contains the declaration of all the global variables used.
+### I/O Redirection
+* Handled `>`, `>>` and `<` operators in the input by opening (in the child process) the corresponding input/output file, and using `dup2()` function to redirect all the contents from STDOUT/STDIN to the file opened.
+* For now if there is an I/O redirection in the input, the command is executed using `execvp()` and not using the manually implemented commands. (will be changed before final submission)
 
-### [main.c](main.c)
-Contains the following functions:
-* `setup()`: sets the values of global variables like username, hostname, home directory, etc.
-* `shell()`: takes input from `STDIN` and calls `parseInput()` with the input command entered by the user.
-* `main()`: calls `setup()` and `initializeHistory()` once, and calls `prompt()` and `shell()` infinitely many times.
+### Known problems
+* Hitting enter with no input enetered produces segmentation fault. (will be fixed)
+* `Ctrl-d` is not working properly.
 
-### [prompt.c](prompt.c)
-Contains the function `prompt()` that prints the prompt with appropriate username, hostname and current working directory.
-
-### [parse_input.c](parse_input.c)
-Contains the following functions:
-* `tokenizeInput()`: tokenizes the input entered by the user to handle multiple spaces and tabs in between words.
-* `parseInput()`: calls the appropriate function according to the first token of the input.
-
-### [basic_commands.c](basic_commands.c)
-Contains the following functions:
-* `changeDirectory()`: implements cd command using `chdir()`.
-* `echo()`: implements echo command by just printing out all the tokens in the input, except the first token (which will be the string "echo").
-
-### [list_files.c](list_files.c)
-* Contains the function `listFiles()` and its helper functions to implement the `ls` command with `-l` and `-a` flags.
-* The fields in the output of `ls -l` like the permissions, no. of hardlinks, file size, etc, are obtained using the `lstat()` function.
-
-### [system_commands.c](system_commands.c)
-Contains the following functions:
-* `execute()`: Executes system commands that are not implemented here using the `execvp()` function, in either background or foreground depending on the user input.
-* `bgProcessExit()`: This is called when `SIGCHLD` is signalled (when a child is terminated). This function handles printing the name and the pid of the terminated background process.
-
-### [pinfo.c](pinfo.c)
-* Contains a function `pinfo()` that prints out process info like pid, status, memory and executable path, by reading the files `/proc/<pid>/stat` and `/proc/<pid>/exe`.
-* A pid can be passed as an argument to print the process info of the process with that pid, or by default it prints the info of the current process (which is the shell itself).
-
-### [discover.c](discover.c)
-* Contains the function `discover()` that searches for a target file/directory (depending on the flags given) in the directory given. 
-* Implemented by recursively going through all the files and directories in the given path and checking if it matches the target.
-
-### [history.c](history.c)
-Contains the following main functions:
-* `initializeHistory()`: initializes history by setting up the history file (`~/.gosh_history`) 
-* `updateHistory()`: adds the input line to the end of the history file. If the file has more than 20 lines, it removes the first line (oldest history).
-* `printHistory()`: prints the last 10 lines of the history file.
