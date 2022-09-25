@@ -24,16 +24,17 @@ void shell() {
     /* inputLine[cmdLength - 1] = '\0'; */
 
     if (fgets(inputLine, MAX_INPUT, stdin) == NULL) {
-        printf("The cntrl D command was executed\n");
+        /* printf("The cntrl D command was executed\n"); */
         exit(1);        
     }
-    updateHistory(inputLine);
     /* inputLine[cmdLength - 1] = '\0'; */
     int len = strlen(inputLine);
-    inputLine[len-1] = '\0';
+    if (len > 1) {
+        inputLine[len-1] = '\0';
+        updateHistory(inputLine);
+        parseInput(inputLine);
+    }
 
-
-    parseInput(inputLine);
 }
 
 int main() {

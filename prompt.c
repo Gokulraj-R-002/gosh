@@ -13,4 +13,6 @@ void prompt() {
 
     /* printf("<%s@%s:%s> ", USER, HOST, pathToPrint); */
     printf("\e[0;96m<%s@%s:\e[1;34m%s\e[0;96m> \e[0m", USER, HOST, pathToPrint);
+
+    fflush(stdout);
 }
