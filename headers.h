@@ -20,6 +20,7 @@
 #include <time.h>
 
 #define size 1024
+#define MAX_BG_PROCESSES 10
 
 // colors
 #define colorReset  "\x1B[0m"
@@ -43,6 +44,13 @@ struct fileInfo {
     char *filePath;
 };
 
+struct bgProcess {
+    int num; // process number in the list
+    int pid;
+    char *name;
+    int isRunning;
+};
+
 
 extern char USER[size]; // username
 extern char HOST[size]; // hostname
@@ -52,8 +60,13 @@ extern char prevDir[size]; // previous working directory
 extern int fdHistory; // file descriptor for history file
 
 extern int fgPid; // pid of foreground process
+extern char *fgName; // name of foreground process
+
 extern int isIORedirection;
 extern int ioRedirPos;
+
+extern struct bgProcess *bgProcesses;
+extern int numBgProcesses;
 
 // function declarations
 
@@ -90,6 +103,11 @@ void bgProcessExit();
 void setColors(char *path);
 void resetColors();
 
+int addBgProcess(char *name, int pid);
+void removeBgProcess(int pid);
+void stopBgProcess(int pid);
+void jobs(struct tokensInInput *tokenizedInput);
+void sig(struct tokensInInput *tokenizedInput);
 
 void ioRedirection(struct tokensInInput *tokenizedInput, int posInInput);
 void ctrlC_handler();

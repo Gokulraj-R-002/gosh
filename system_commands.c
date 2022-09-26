@@ -3,6 +3,7 @@
 char *bgProcessName;
 
 int fgPid;
+char *fgName;
 
 void execute(struct tokensInInput *tokenizedInput) {
 
@@ -26,7 +27,8 @@ void execute(struct tokensInInput *tokenizedInput) {
         else {
             // parent
             bgProcessName = tokenizedInput->tokens[0];
-            printf("[1] %d\n", pid);
+            int num = addBgProcess(bgProcessName, pid);
+            printf("[%d] %d\n", num, pid);
         }
 
     }
@@ -47,8 +49,10 @@ void execute(struct tokensInInput *tokenizedInput) {
         else {
             // parent
             fgPid = pid;
+            fgName = tokenizedInput->tokens[0];
             waitpid(pid, &status, WUNTRACED);
             fgPid = 0;
+            fgName = NULL;
         }
     }
 }
@@ -64,6 +68,7 @@ void bgProcessExit() {
         else if (pid == -1)
             return;
         else {
+            stopBgProcess(pid);
             printf("\n%s with pid = %d exited normally\n", bgProcessName, pid);
         }
     }

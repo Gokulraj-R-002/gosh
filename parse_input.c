@@ -56,6 +56,12 @@ void searchCommand(struct tokensInInput *tokenizedInput) {
     else if (strcmp(cmd, "discover") == 0) {
         discover(tokenizedInput);
     }
+    else if (strcmp(cmd, "jobs") == 0) {
+        jobs(tokenizedInput);
+    }
+    else if (strcmp(cmd, "sig") == 0) {
+        sig(tokenizedInput);
+    }
     else {
         execute(tokenizedInput);
     }
