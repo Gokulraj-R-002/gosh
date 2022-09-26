@@ -16,9 +16,8 @@ This is a simple shell program written in C that replicates most of the function
 
 ### I/O Redirection
 * Handled `>`, `>>` and `<` operators in the input by opening (in the child process) the corresponding input/output file, and using `dup2()` function to redirect all the contents from STDOUT/STDIN to the file opened.
-* For now if there is an I/O redirection in the input, the command is executed using `execvp()` and not using the manually implemented commands. (will be changed before final submission)
 
-### Known problems
-* Hitting enter with no input enetered produces segmentation fault. (will be fixed)
-* `Ctrl-d` is not working properly.
-
+### Background Jobs
+* A dynamically allocated array is maintained to store the info of the background processes.
+* `jobs` command prints the background jobs with their pid and other info. Options: `-r` prints only the running processes, `-s` prints only the stopped processes.
+* `sig` command takes two arguments `process number` and `signal number`. It send the corresponding signal to the process with `process number`.
